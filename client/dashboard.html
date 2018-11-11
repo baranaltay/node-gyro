@@ -6,6 +6,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>Page Title</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
 	<link rel="stylesheet" href="./assets/css/custom.css">
 </head>
 
@@ -19,17 +20,28 @@
 		<span>Beta: <b class="beta-val"></b></span><br />
 		<span>Gamma: <b class="gamma-val"></b></span><br />
 	</div>
-	<div class="space">
-		<div class="cube">
-			<div class="cube-face  top"></div>
-			<div class="cube-face  left"></div>
-			<div class="cube-face  right"></div>
-			<div class="cube-face  bottom"></div>
-			<div class="cube-face  front"></div>
-			<div class="cube-face  back"></div>
+	<div class="space-wrapper">
+		<div class="space">
+			<div class="cube">
+				<div class="cube-face  top"></div>
+				<div class="cube-face  left"></div>
+				<div class="cube-face  right"></div>
+				<div class="cube-face  bottom"></div>
+				<div class="cube-face  front"></div>
+				<div class="cube-face  back"></div>
+			</div>
 		</div>
 	</div>
+	<div class="chart-wrapper">
+		<div id="chartdiv"></div>
+	</div>
 	<script src="./assets/js/socket.io.js"></script>
+	<script src="./assets/js/moment.js"></script>
+	<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+	<script src="https://www.amcharts.com/lib/3/serial.js"></script>
+	<script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+	<script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+	<script src="./assets/js/utils.js"></script>
 	<script src="./assets/js/script.js"></script>
 </body>
 
