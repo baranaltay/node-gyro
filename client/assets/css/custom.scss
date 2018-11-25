@@ -11,8 +11,8 @@ body {
   position: relative;
   width: 100vw;
   height: 100vh;
-  margin: 0px;
-  padding: 20px;
+  margin: 0px; //   padding: 20px;
+  box-sizing: border-box;
   .logs {
     position: absolute;
     left: 0px;
@@ -25,11 +25,40 @@ body {
     position: absolute;
     right: 0px;
     top: 0px;
-    width: calc((100vw - #{$width}));
-    padding: 20px 50px 0px 150px;
+    width: calc((100% - #{$width} - 250px));
+    padding: 20px 0px 0px 0px;
     box-sizing: border-box;
+    height: 50vh;
     #chartdiv {
       height: $height;
+    }
+    .legend {
+      position: absolute;
+      bottom: -70px;
+      left: 50%;
+      transform: translateX(-50%);
+      .legend-item {
+        display: inline-block;
+        margin-right: 20px;
+        vertical-align: text-bottom;
+        &::before {
+          content: '';
+          vertical-align: text-bottom;
+          display: inline-block;
+          width: 20px;
+          height: 20px;
+          margin-right: 5px;
+        }
+        &.beta::before {
+          background-color: #f00;
+        }
+        &.gamma::before {
+          background-color: #0f0;
+        }
+        &.alpha::before {
+          background-color: #00f;
+        }
+      }
     }
   }
   .space-wrapper {
@@ -43,11 +72,10 @@ body {
       perspective: 1000px;
       display: inline-block;
       width: $width;
-      height: $height;
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
+      height: $height; //   position: absolute;
+      //   left: 50%;
+      //   top: 50%;
+      //   transform: translate(-50%, -50%);
       .cube {
         display: inline-block; //   transition: all 0.85s cubic-bezier(0.175, 0.885, 0.320, 1.275);
         position: relative;

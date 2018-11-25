@@ -7,7 +7,7 @@ body {
   width: 100vw;
   height: 100vh;
   margin: 0px;
-  padding: 20px;
+  box-sizing: border-box;
 }
 body .logs {
   position: absolute;
@@ -21,12 +21,41 @@ body .chart-wrapper {
   position: absolute;
   right: 0px;
   top: 0px;
-  width: calc((100vw - 200px));
-  padding: 20px 50px 0px 150px;
+  width: calc((100% - 200px - 250px));
+  padding: 20px 0px 0px 0px;
   box-sizing: border-box;
+  height: 50vh;
 }
 body .chart-wrapper #chartdiv {
   height: 380px;
+}
+body .chart-wrapper .legend {
+  position: absolute;
+  bottom: -70px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+body .chart-wrapper .legend .legend-item {
+  display: inline-block;
+  margin-right: 20px;
+  vertical-align: text-bottom;
+}
+body .chart-wrapper .legend .legend-item::before {
+  content: "";
+  vertical-align: text-bottom;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+}
+body .chart-wrapper .legend .legend-item.beta::before {
+  background-color: #f00;
+}
+body .chart-wrapper .legend .legend-item.gamma::before {
+  background-color: #0f0;
+}
+body .chart-wrapper .legend .legend-item.alpha::before {
+  background-color: #00f;
 }
 body .space-wrapper {
   display: inline-block;
@@ -41,10 +70,6 @@ body .space-wrapper .space {
   display: inline-block;
   width: 200px;
   height: 380px;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
 }
 body .space-wrapper .space .cube {
   display: inline-block;

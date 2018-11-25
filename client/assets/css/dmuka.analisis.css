@@ -1,0 +1,97 @@
+html,
+body {
+  margin: 0px;
+  padding: 0px;
+  width: 100%;
+  height: 100%;
+}
+
+div#dmuka-analisis {
+  display: block;
+  height: 100%;
+  width: calc(100% - 100px);
+  box-sizing: border-box;
+  border: 1px solid #000;
+  position: absolute;
+}
+
+.dmuka-analysis {
+  display: block;
+  position: absolute;
+}
+
+.dmuka-analysis-zero-line-x {
+  position: absolute;
+  left: calc(50% - 0.5px);
+  top: 0px;
+  height: 100%;
+  width: 1px;
+  background-color: #aaa;
+}
+
+.dmuka-analysis-zero-line-y {
+  position: absolute;
+  left: 0px;
+  top: calc(50% - 0.5px);
+  height: 1px;
+  width: 100%;
+  background-color: #aaa;
+}
+
+.dmuka-analysis-line {
+  stroke-width: 2;
+  stroke: #000;
+}
+
+.dmuka-analysis-label-x-item {
+  position: absolute;
+  bottom: -15px;
+  text-align: right;
+  font-family: arial;
+  font-size: 10px;
+  color: #944a25;
+}
+
+.dmuka-analysis-label-x-item:before {
+  content: '';
+  position: absolute;
+  left: 0px;
+  top: -10px;
+  width: 1px;
+  height: 5px;
+  background-color: #000;
+}
+
+.dmuka-analysis-label-y-item {
+  position: absolute;
+  left: -40px;
+  width: 40px;
+  box-sizing: border-box;
+  padding-right: 5px;
+  text-align: right;
+  font-family: arial;
+  font-size: 10px;
+  color: #944a25;
+}
+
+.dmuka-analysis-label-y-item:before {
+  content: '';
+  position: absolute;
+  right: -5px;
+  top: 0px;
+  width: 5px;
+  height: 1px;
+  background-color: #000;
+}
+
+.dmuka-analysis-line--beta {
+  stroke: #f00;
+}
+
+.dmuka-analysis-line--gamma {
+  stroke: #0f0;
+}
+
+.dmuka-analysis-line--alpha {
+  stroke: #00f;
+}

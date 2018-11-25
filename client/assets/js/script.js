@@ -25,18 +25,18 @@ function initSocket () {
 	var socket = io('http://192.168.0.26:3000');
 	socket.on('connect', function () {
 		console.log('server socket connected!');
+
+		setTimeout(() => {
+			initChart();
+		}, 1000);
 	});
 
 	var getDataEnable = false;
 	socket.on('message', function (data) {
 		// console.log('data', data);
-		xdeg = (data.beta).toFixed(1);
-		ydeg = (data.gamma).toFixed(1);
-		zdeg = (data.alpha).toFixed(1);
-
-		xdeg = xdeg - 180;
-		ydeg = ydeg - 180;
-		zdeg = (zdeg - 180) * -1;
+		xdeg = (data.beta).toFixed(2);
+		ydeg = (data.gamma).toFixed(2);
+		zdeg = (data.alpha).toFixed(2);
 
 		xdegstring = xdeg + 'deg';
 		ydegstring = ydeg + 'deg';
@@ -97,75 +97,65 @@ function initPrototypes () {
 }
 
 function initChart () {
-	var chart = AmCharts.makeChart("chartdiv", {
-		"type": "serial",
-		"theme": "light",
-		"zoomOutButton": {
-			"backgroundColor": '#000000',
-			"backgroundAlpha": 0.15
+	var startTime = new Date().getTime();
+
+	var timerMillisecond = 100;
+	var timeRange = 10 * 1000;
+
+	var myChart = new dmuka.Analysis({
+		element: document.querySelector("#dmuka-analisis"),
+		width: "100%",
+		height: "100%",
+		minX: startTime,
+		maxX: startTime + timeRange,
+		minY: -360,
+		maxY: 360,
+		// centerLineX: true,
+		centerLineY: true,
+		labelsX: true,
+		labelsXFormat: function (value) {
+			var date = new Date(value);
+			return date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + "." + date.getMilliseconds();
 		},
-		"dataProvider": [],
-		"categoryField": "date",
-		"categoryAxis": {
-			"parseDates": true,
-			"minPeriod": "fff",
-			"dashLength": 3,
-			"gridAlpha": 0.15,
-			"axisColor": "#DADADA"
-		},
-		"graphs": [{
-			"id": "g1",
-			"valueField": "beta",
-			"bullet": "round",
-			"bulletBorderColor": "#cc0000",
-			"bulletBorderThickness": 2,
-			"lineThickness": 2,
-			"lineColor": "#cc0000",
-			"negativeLineColor": "#cc0000",
-			"hideBulletsCount": 50
-		},{
-			"id": "g2",
-			"valueField": "gamma",
-			"bullet": "round",
-			"bulletBorderColor": "#00cc00",
-			"bulletBorderThickness": 2,
-			"lineThickness": 2,
-			"lineColor": "#00cc00",
-			"negativeLineColor": "#00cc00",
-			"hideBulletsCount": 50
-		},{
-			"id": "g3",
-			"valueField": "alpha",
-			"bullet": "round",
-			"bulletBorderColor": "#0000cc",
-			"bulletBorderThickness": 2,
-			"lineThickness": 2,
-			"lineColor": "#0000cc",
-			"negativeLineColor": "#0000cc",
-			"hideBulletsCount": 50
-		}],
-		"chartCursor": {
-			"cursorPosition": "mouse"
-		}
+		labelsY: true,
+		labelsYStep: 12,
+		data: []
 	});
 
-	chart.addListener("rendered", zoomChart);
-	window.myChart = chart;
-	zoomChart();
+	function addData () {
+		if (myChart.analysis.data.length > timeRange / timerMillisecond) {
+			myChart.analysis.data.shift();
+		}
 
-	function zoomChart () {
-		chart.zoomToIndexes(chart.dataProvider.length - 40, chart.dataProvider.length - 1);
+		var time = new Date().getTime();
+		if (xdeg !== undefined) {
+			myChart.analysis.data.push({
+				beta: {
+					y: xdeg,
+					x: time
+				},
+				gamma: {
+					y: ydeg,
+					x: time
+				},
+				alpha: {
+					y: zdeg,
+					x: time
+				}
+			});
+			startTime = myChart.analysis.data[0].beta.x;
+		}
+
+		myChart.analysis.minX = startTime;
+		myChart.analysis.maxX = startTime + timeRange;
+		myChart.analysis.update();
 	}
-
-	setInterval(() => {
-		myChart.dataProvider = dataProvider;
-		myChart.validateData();
-	}, gyroDataMilliSecond);
+	addData();
+	var timer = setInterval(addData, timerMillisecond);
 }
-
 
 window.onload = function () {
 	initPrototypes();
 	initSocket();
-	initChart();
+	// initChart();
 };
