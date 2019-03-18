@@ -8,6 +8,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="./assets/css/dmuka.analisis.css">
 	<link rel="stylesheet" href="./assets/css/custom.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/2.8.1/gl-matrix-min.js"></script>
 </head>
 
 <body>
@@ -22,7 +23,7 @@
 	</div>
 	<div class="space-wrapper">
 		<div class="space">
-			<div class="cube">
+			<div class="cube" id="plane">
 				<div class="cube-face  top"></div>
 				<div class="cube-face  left"></div>
 				<div class="cube-face  right"></div>
@@ -43,6 +44,29 @@
 	<script src="./assets/js/socket.io.js"></script>
 	<script src="./assets/js/script.js"></script>
 	<script src="./assets/js/dmuka.analisis.js"></script>
+	<script>
+		// var yawAngle = 230.8 * Math.PI / 180;
+		// var pitchAngle = 121.0 * Math.PI / 180;
+		// var rollAngle = 185.0 * Math.PI / 180;
+		// var mvMatrix = mat4.create();
+
+		// var rotYaw = mat4.create();
+		// mat4.identity(rotYaw);
+		// mat4.rotateY(rotYaw, rotYaw, -yawAngle);
+		// mat4.multiply(mvMatrix, mvMatrix, rotYaw);
+
+		// var rotPitch = mat4.create();
+		// mat4.identity(rotPitch);
+		// mat4.rotateX(rotPitch, rotPitch, pitchAngle);
+		// mat4.multiply(mvMatrix, mvMatrix, rotPitch);
+
+		// var rotRoll = mat4.create();
+		// mat4.identity(rotRoll);
+		// mat4.rotateZ(rotRoll, rotRoll, rollAngle);
+		// mat4.multiply(mvMatrix, mvMatrix, rotRoll);
+
+		// document.getElementById('plane').style.transform = `matrix3d(${mvMatrix.toString()})`;
+	</script>
 </body>
 
 </html>

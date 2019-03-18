@@ -22,7 +22,7 @@ var dataProvider = [];
 var gyroLocked = false;
 
 function initSocket () {
-	var socket = io('http://192.168.0.26:3000');
+	var socket = io('http://192.168.0.10:3000');
 	socket.on('connect', function () {
 		console.log('server socket connected!');
 
@@ -38,15 +38,36 @@ function initSocket () {
 		ydeg = (data.gamma).toFixed(2);
 		zdeg = (data.alpha).toFixed(2);
 
-		xdegstring = xdeg + 'deg';
-		ydegstring = ydeg + 'deg';
-		zdegstring = +zdeg + 'deg';
+		// xdegstring = xdeg + 'deg';
+		// ydegstring = ydeg + 'deg';
+		// zdegstring = +zdeg + 'deg';
 
-		betaElem.innerHTML = xdegstring;
-		gammaElem.innerHTML = ydegstring;
-		alphaElem.innerHTML = zdegstring;
+		// betaElem.innerHTML = xdegstring;
+		// gammaElem.innerHTML = ydegstring;
+		// alphaElem.innerHTML = zdegstring;
 
-		cube.prefixedStyle('transform', `rotateY(${ydegstring}) rotateX(${xdegstring}) rotateZ(${zdegstring})`);
+		var yawAngle = data.gamma * Math.PI / 180;
+		var pitchAngle = data.beta * Math.PI / 180;
+		var rollAngle = data.alpha * Math.PI / 180;
+		var mvMatrix = mat4.create();
+
+		var rotYaw = mat4.create();
+		mat4.identity(rotYaw);
+		mat4.rotateY(rotYaw, rotYaw, yawAngle);
+		mat4.multiply(mvMatrix, mvMatrix, rotYaw);
+
+		var rotPitch = mat4.create();
+		mat4.identity(rotPitch);
+		mat4.rotateX(rotPitch, rotPitch, -pitchAngle);
+		mat4.multiply(mvMatrix, mvMatrix, rotPitch);
+
+		var rotRoll = mat4.create();
+		mat4.identity(rotRoll);
+		mat4.rotateZ(rotRoll, rotRoll, -rollAngle);
+		mat4.multiply(mvMatrix, mvMatrix, rotRoll);
+
+		document.getElementById('plane').style.transform = `matrix3d(${mvMatrix.toString()})`;
+		// cube.prefixedStyle('transform', `rotateY(${ydegstring}) rotateX(${xdegstring}) rotateZ(${zdegstring})`);
 	});
 	socket.on('disconnect', function () {
 		console.log('server socket disconnected!');
@@ -155,7 +176,7 @@ function initChart () {
 }
 
 window.onload = function () {
-	initPrototypes();
+	// initPrototypes();
 	initSocket();
 	// initChart();
 };

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Page Title</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="./assets/css/custom.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/2.8.1/gl-matrix-min.js"></script>
+</head>
+
+<body>
+	<div class="space-wrapper">
+		<div class="space">
+			<div id="plane"  class="cube">
+				<div class="cube-face  top"></div>
+				<div class="cube-face  left"></div>
+				<div class="cube-face  right"></div>
+				<div class="cube-face  bottom"></div>
+				<div class="cube-face  front"></div>
+				<div class="cube-face  back"></div>
+			</div>
+		</div>
+	</div>
+	<script>
+		var yawAngle = 230.8 * Math.PI / 180;
+		var pitchAngle = 121.0 * Math.PI / 180;
+		var rollAngle = 185.0 * Math.PI / 180;
+		var mvMatrix = mat4.create();
+
+		var rotYaw = mat4.create();
+		mat4.identity(rotYaw);
+		mat4.rotateY(rotYaw, rotYaw, -yawAngle);
+		mat4.multiply(mvMatrix, mvMatrix, rotYaw);
+
+		var rotPitch = mat4.create();
+		mat4.identity(rotPitch);
+		mat4.rotateX(rotPitch, rotPitch, pitchAngle);
+		mat4.multiply(mvMatrix, mvMatrix, rotPitch);
+
+		var rotRoll = mat4.create();
+		mat4.identity(rotRoll);
+		mat4.rotateZ(rotRoll, rotRoll, rollAngle);
+		mat4.multiply(mvMatrix, mvMatrix, rotRoll);
+
+		document.getElementById('plane').style.transform = `matrix3d(${mvMatrix.toString()})`;
+	</script>
+</body>
+
+</html>
